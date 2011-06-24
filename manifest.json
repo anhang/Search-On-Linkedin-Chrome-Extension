@@ -1,0 +1,13 @@
+{
+  "name": "Search on Linkedin",
+  "description": "Search companies on Linkedin",
+  "version": "0.1",
+  "permissions": ["contextMenus", "http://www.linkedin.com/*/"],
+  "background_page": "background.html",
+  "content_scripts": [
+    {
+    "matches": ["http://*/*", "https://*/*", "*://*/*"],
+    "js": ["application.js"]
+    }
+  ]
+}

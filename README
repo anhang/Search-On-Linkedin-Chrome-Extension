@@ -1,0 +1,7 @@
+To load an open Chrome Plugin:
+http://code.google.com/chrome/extensions/getstarted.html#load
+
+How to use:
+After extension is loaded, highlight and right click on any chunk of text to search on Linkedin.
+
+Currently, only the Company Insider Plugin is being used. Possible future additions may include the Member Profile Plugin and other Linkedin Connect Plugins located at http://developer.linkedin.com/community/plugins
