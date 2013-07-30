@@ -1,13 +1,19 @@
 {
   "name": "Search on Linkedin",
+  "version": "0.2",
+  "manifest_version": 2,
   "description": "Search companies on Linkedin",
-  "version": "0.1",
   "permissions": ["contextMenus", "http://www.linkedin.com/*/"],
-  "background_page": "background.html",
+  "background": {
+    "scripts": ["background.js"]
+  },
+  "icons" : {
+    "16": "icon.png"
+  },
   "content_scripts": [
     {
-    "matches": ["http://*/*", "https://*/*", "*://*/*"],
-    "js": ["application.js"]
+      "matches": ["http://*/*", "https://*/*", "*://*/*"],
+      "js": ["application.js"]
     }
   ]
 }

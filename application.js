@@ -33,9 +33,14 @@ document.onmousemove = function(e){
 }
 
 
+function onSelectionChange() {
+  var selection = window.getSelection().toString().trim();
+  var msg = {
+    "selection" : selection
+  };
+  chrome.extension.sendMessage(msg, function(company) {
+    showCompanyDataBox(company.id);
+  });
+}
 
-
-chrome.extension.onRequest.addListener(function(request, sender, sendResponse){
-	showCompanyDataBox(request.companyId);
-	sendResponse({});
-});
+document.addEventListener('selectionchange', onSelectionChange);

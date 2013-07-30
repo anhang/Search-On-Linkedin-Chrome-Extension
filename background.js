@@ -1,27 +1,35 @@
-function selectionOnClick(info, tab){
-	getCompanyId(info["selectionText"], tab);
-}
+var sendToApplication;
 
-function getCompanyId(name, tab){
+function getCompanyId(name) {
 	var xhr = new XMLHttpRequest();
 	xhr.open("GET", "http://www.linkedin.com/ta/federator?types=company&query=" + name, true);
 	xhr.onreadystatechange = function() {
 	  if (xhr.readyState == 4) {
-		getCompanyIdCB(JSON.parse(xhr.responseText), tab);
+      getCompanyIdCB(JSON.parse(xhr.responseText));
 	  }
 	}
 	xhr.send();
 }
 
-function getCompanyIdCB(response, tab){
-	chrome.tabs.sendRequest(tab.id, {companyId : response.company.resultList[0].id}, function(response){
-		// alert(response.response);
-	});
+function getCompanyIdCB(response) {
+  if (response.company.resultList.length === 0) {
+    return;
+  }
+  sendToApplication && sendToApplication(response.company.resultList[0]);
 }
 
+var cm_clickHandler = function(clickData, tab) {
+  getCompanyId(clickData.selectionText);
+};
 
-var context = "selection"
-var title = "Search On Linkedin!";
-var id = chrome.contextMenus.create({"title": title, "contexts":[context],
-                                     "onclick": selectionOnClick});
+chrome.contextMenus.create({
+  title: 'search!',
+  contexts: ['all'],
+  onclick: cm_clickHandler
+});
+
+chrome.extension.onMessage.addListener(function(msg, sender, sendResponse) {
+  sendToApplication = sendResponse;
+  return true;
+});
 
